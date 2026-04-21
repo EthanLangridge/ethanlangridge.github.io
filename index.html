@@ -1,1 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+  ============================================================
+  ETHAN LANGRIDGE — PERSONAL PORTFOLIO SITE
+  ============================================================
+  This is a single HTML file. Everything (structure, style,
+  and behaviour) lives in here, which keeps things simple.
+
+  HTML is made up of "tags" that look like <this>.
+  Most tags have an opening <tag> and a closing </tag>.
+  The browser reads this file and turns it into a webpage.
+
+  THREE MAIN SECTIONS IN THIS FILE:
+  1. <head>  — invisible settings (fonts, page title, etc.)
+  2. <style> — all the visual styling (colours, fonts, layout)
+  3. <body>  — the actual content you see on screen
+  ============================================================
+-->
+
+<head>
+  <!--
+    "meta" tags give the browser information about the page.
+    charset tells it to support all characters (including emoji).
+    viewport makes it look correct on mobile phones.
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- This is what appears in the browser tab -->
+  <title>Ethan Langridge — Mechanical Engineering</title>
+
+  <!--
+    Google Fonts — loading two fonts from the internet:
+    "Playfair Display" for headings (elegant, distinctive)
+    "Inter" for body text (clean, readable)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    /*
+      ========================================================
+      CSS (CASCADING STYLE SHEETS)
+      This section controls how everything LOOKS.
+      The format is always:
+        selector { property: value; }
+      Where "selector" is what you're styling (e.g. "body"),
+      and "property: value" is what you're changing.
+      ========================================================
+    */
+
+    /*
+      CSS VARIABLES — think of these as named colours/values
+      you can reuse throughout the file. Change them here
+      and the whole site updates. Defined on :root so they're
+      available everywhere.
+    */
+    :root {
+      --bg:         #f5f3ee;      /* warm off-white background */
+      --surface:    #eceae4;      /* slightly darker surface */
+      --text:       #1c1c1a;      /* near-black for main text */
+      --muted:      #6b6b65;      /* grey for secondary text */
+      --accent:     #1a4a35;      /* deep forest green — the main colour */
+      --accent-lt:  #e8f0eb;      /* light tint of accent for tags */
+      --border:     #d6d3cb;      /* subtle border colour */
+      --mono:       'Space Mono', monospace;
+      --serif:      'Playfair Display', serif;
+      --sans:       'Inter', sans-serif;
+    }
+
+    /* Reset — removes browser default spacing so we start clean */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Base styles for the whole page */
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Smooth scrolling when clicking nav links */
+    html { scroll-behavior: smooth; }
+
+    /*
+      ── NAVIGATION BAR ──────────────────────────────────────
+    */
+    nav {
+      position: fixed;          /* stays at top when scrolling */
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;             /* sits above everything else */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(245, 243, 238, 0.92);
+      backdrop-filter: blur(8px);   /* frosted glass effect */
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    /* The nav links container */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;         /* removes bullet points */
+    }
+
+    /* Individual nav links */
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;   /* smooth colour change on hover */
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /*
+      ── LAYOUT CONTAINER ────────────────────────────────────
+      "max-width" stops lines getting too long on wide screens.
+      "margin: 0 auto" centres it horizontally.
+    */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /*
+      ── SECTIONS ────────────────────────────────────────────
+      Each section of the page shares this base padding.
+    */
+    section {
+      padding: 6rem 0;
+    }
+
+    /* A thin horizontal rule between sections */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /*
+      ── HERO SECTION ────────────────────────────────────────
+      The first thing visitors see.
+    */
+    #hero {
+      padding-top: 10rem;
+      padding-bottom: 6rem;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5rem);  /* scales with screen width */
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    /* Container for the two CTA buttons */
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Solid button style */
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 3px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: #0f3325;
+      border-color: #0f3325;
+    }
+
+    /* Outlined button style */
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /*
+      ── SECTION HEADINGS ────────────────────────────────────
+    */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    /*
+      ── ABOUT SECTION ───────────────────────────────────────
+    */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-weight: 300;
+    }
+
+    /* The stats boxes on the right side of About */
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /*
+      ── RESEARCH SECTION ────────────────────────────────────
+    */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .research-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .research-icon {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .research-card h3 {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .research-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Small tag/badge element */
+    .tag {
+      display: inline-block;
+      background: var(--accent-lt);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      margin-top: 1rem;
+    }
+
+    /*
+      ── PROJECTS SECTION ────────────────────────────────────
+    */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+
+    .project-item:hover { border-color: var(--accent); }
+
+    .project-year {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding-top: 0.25rem;
+      min-width: 3.5rem;
+    }
+
+    .project-info h3 {
+      font-weight: 500;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .project-info p {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: flex-end;
+    }
+
+    /*
+      ── CONTACT SECTION ─────────────────────────────────────
+    */
+    #contact {
+      text-align: center;
+    }
+
+    #contact .section-label,
+    #contact .section-heading {
+      text-align: center;
+    }
+
+    #contact p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /*
+      ── FOOTER ──────────────────────────────────────────────
+    */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /*
+      ── RESPONSIVE — MOBILE ─────────────────────────────────
+      "@media" queries let you apply styles only at certain
+      screen sizes. This hides/adjusts things on small screens.
+    */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }  /* hide nav links on mobile */
+      .container { padding: 0 1.25rem; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .project-item { grid-template-columns: 1fr; }
+      .project-tags { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================================================
+    NAVIGATION BAR
+    The "href" values link to section IDs further down the page.
+    The "#" means "on this same page, find the element with
+    this id." e.g. href="#research" jumps to <section id="research">
+  ======================================================== -->
+  <nav>
+    <span class="nav-name">Ethan Langridge</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========================================================
+    HERO SECTION
+    The big intro at the top of the page.
+    "id" attributes are what the nav links jump to.
+  ======================================================== -->
+  <section id="hero">
+    <div class="container">
+
+      <!-- Small label above the name — change this to whatever you like -->
+      <p class="hero-label">Mechanical Engineer</p>
+
+      <!-- Your name — this is the biggest text on the page -->
+      <h1 class="hero-name">
+        Ethan<br>Langridge
+      </h1>
+
+      <!-- A short tagline — keep it to 2-3 lines -->
+      <p class="hero-sub">
+        Future BEng Mechanical Engineering student at the University of Hertfordshire.
+      </p>
+
+      <!-- Buttons — the "href" on the first one links to your email. -->
+      <div class="hero-cta">
+        <a href="mailto:ethan.langridge@outlook.com" class="btn btn-primary">Get in touch</a>
+        <a href="#research" class="btn btn-secondary">Research interests</a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ========================================================
+    ABOUT SECTION
+  ======================================================== -->
+  <section id="about">
+    <div class="container">
+
+      <p class="section-label">Background</p>
+      <h2 class="section-heading">About me</h2>
+
+      <div class="about-grid">
+
+        <!-- Left column: text paragraphs -->
+        <div class="about-text">
+
+          <p>
+            I will be a first-year Mechanical Engineering student at the
+            University of Hertfordshire, with a strong interest in
+            fluid dynamics and biomimetic engineering. During College
+            I completed a CAMTEC Extended Certificate in Engineering 
+	    along with A levels in Physics and Mathematics, where I
+            developed skills in CAD, sustainability analysis, and
+            technical report writing.
+          </p>
+          <p>
+            My current research focus is on riblet drag reduction —
+            a passive aerodynamic surface treatment inspired by shark
+            skin microstructure. I am exploring its application to
+            small UAVs and automotive platforms, particularly at the
+            low Reynolds numbers relevant to those systems.
+          </p>
+          <p>
+            Outside of academics I will be involved with the university's
+            Formula Student team and maintain a personal research log
+            documenting my progress in this area.
+          </p>
+
+        </div>
+
+        <!-- Right column: the stat boxes -->
+        <div class="about-stats">
+
+          <!-- Each stat-box has a big number and a small label.
+               Update these as your situation changes. -->
+          <div class="stat-box">
+            <div class="stat-number">BEng</div>
+            <div class="stat-label">Mechanical Engineering — University of Hertfordshire</div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-number">2026</div>
+            <div class="stat-label">Course start date — targeting placement year 2028–29</div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Years actively researching biomimetic aerodynamics</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ========================================================
+    RESEARCH INTERESTS SECTION
+    Add, remove or edit cards as your focus develops.
+  ======================================================== -->
+  <section id="research">
+    <div class="container">
+
+      <p class="section-label">Focus areas</p>
+      <h2 class="section-heading">Research interests</h2>
+
+      <div class="research-grid">
+
+        <!-- CARD 1 -->
+        <div class="research-card">
+          <span class="research-icon">01 — Aerodynamics</span>
+          <h3>Riblet drag reduction</h3>
+          <p>
+            Investigating how V-groove riblet geometry — inspired by the
+            dermal denticles of fast-swimming sharks — reduces turbulent
+            skin friction drag. Current focus is on low Reynolds number
+            regimes relevant to small UAVs, where existing literature
+            is limited.
+          </p>
+          <span class="tag">Biomimicry</span>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="research-card">
+          <span class="research-icon">02 — Application</span>
+          <h3>UAV surface optimisation</h3>
+          <p>
+            Exploring the application of passive drag reduction
+            techniques to small unmanned aerial vehicles, where
+            endurance is severely limited by aerodynamic inefficiency.
+            Zero-power solutions are particularly valuable in
+            defence contexts.
+          </p>
+          <span class="tag">UAV / Defence</span>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="research-card">
+          <span class="research-icon">03 — Motorsport</span>
+          <h3>Wheel arch aerodynamics</h3>
+          <p>
+            Investigating passive and active flow management techniques
+            to reduce the aerodynamic losses associated with rotating
+            wheels in wheel arches — a significant but underexplored
+            source of drag on road and competition vehicles.
+          </p>
+          <span class="tag">Formula Student</span>
+        </div>
+
+        <!-- CARD 4 — Add more as your interests develop -->
+        <div class="research-card">
+          <span class="research-icon">04 — Methods</span>
+          <h3>Computational fluid dynamics</h3>
+          <p>
+            Developing CFD skills using OpenFOAM to model boundary
+            layer behaviour over textured surfaces. Computational
+            validation will precede any physical wind tunnel testing
+            of riblet geometries.
+          </p>
+          <span class="tag">CFD / OpenFOAM</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ========================================================
+    PROJECTS SECTION
+    A chronological list of your work.
+    Add new items at the top as you complete things.
+  ======================================================== -->
+  <section id="projects">
+    <div class="container">
+
+      <p class="section-label">Work</p>
+      <h2 class="section-heading">Projects &amp; coursework</h2>
+
+      <div class="projects-list">
+
+        <!-- Most recent at the top. Format:
+             Year | Title + description | Tags
+             Add new project-item divs as you complete things. -->
+
+        <div class="project-item">
+          <span class="project-year">2026</span>
+          <div class="project-info">
+            <h3>Riblet aerodynamics — research log (ongoing)</h3>
+            <p>
+              Systematic literature review and research log covering
+              boundary layer theory, riblet geometry optimisation,
+              and application to UAV and automotive surfaces. Building
+              toward a formal final year project proposal.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Ongoing</span>
+            <span class="tag">Research</span>
+          </div>
+        </div>
+
+        <div class="project-item">
+          <span class="project-year">2023-25</span>
+          <div class="project-info">
+            <h3>Sustainability in engineering and Materials Research — CAMTEC</h3>
+            <p>
+              Extended written analysis of sustainable engineering
+              practices including renewable energy technologies, UK climate
+              policy, and global manufacturing. Extended written research of
+ 	      Materials including materials properties, testing and processing
+ 	      Evidence-based reports with full academic referencing.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Report</span>
+            <span class="tag">Research</span>
+          </div>
+        </div>
+
+        <div class="project-item">
+          <span class="project-year">2023</span>
+          <div class="project-info">
+            <h3>Multifunctional desk phone stand — GCSE Design &amp; Technology</h3>
+            <p>
+              Full design process from client brief to manufactured
+              product. Iterative CAD development in Fusion 360,
+              3D printed in PLA. Incorporated anthropometric research,
+              ergonomic watch and phone storage, and minimalist
+              aesthetic direction.
+            </p>
+          </div>
+          <div class="project-tags">
+            <span class="tag">CAD</span>
+            <span class="tag">Additive Manufacturing</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ========================================================
+    CONTACT SECTION
+  ======================================================== -->
+  <section id="contact">
+    <div class="container">
+
+      <p class="section-label">Get in touch</p>
+      <h2 class="section-heading">Contact</h2>
+
+      <p>
+        I am open to conversations about placement opportunities,
+        research collaborations, or Formula Student aerodynamics work.
+        The best way to reach me is by email.
+      </p>
+
+      <a href="mailto:ethan.langridge@outlook.com" class="btn btn-primary">
+        ethan.langridge@outlook.com
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+    FOOTER
+  ======================================================== -->
+  <footer>
+    <div class="container">
+      <p>Ethan Langridge &mdash; Updated 2025</p>
+    </div>
+  </footer>
+
+</body>
+</html>
 
